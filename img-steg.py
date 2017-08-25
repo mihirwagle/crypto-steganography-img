@@ -22,15 +22,7 @@
 
 from PIL import Image
 from pycipher import Vigenere
-import math, os, struct, timeit
-
-# These paths are to be changed by the user
-input_image_path = "pic.png"
-steg_image_path = "steg_image.png"
-input_file_path = "a.txt"
-output_file_path = "b.txt"
-key = "MihirWagle"
-compression = 1
+import getopt, sys, math, os, struct, timeit
 
 # Number of least significant bits containing/to contain data in image
 num_lsb = 2
@@ -204,3 +196,73 @@ def analysis():
     print("Size of input file: \t\t", get_filesize(input_file_path), "B")
     print("Filesize tag: \t\t\t",
           math.ceil(bits_in_max_filesize(image) / 8), "B")
+
+def usage():
+    print("\nCommand Line Arguments:\n",
+          "-h, --hide              To hide data in a sound file\n",
+          "-r, --recover           To recover data from a sound file\n",
+          "-i, --image=            Path to a .png file\n",
+          "-f, --file=             Path to a txt file to hide in the sound file\n",
+          "-o, --output=           Path to an output file\n",
+          "-k, --key=              How many LSBs to use\n",
+          "-c, --compression=      How many bytes to recover from the sound file\n",
+          "--help                  Display this message\n")
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], 'hri:f:o:k:c:',
+                              ['hide', 'recover', 'image=', 'file=',
+                               'output=', 'key=', 'compression=', 'help'])
+except getopt.GetoptError:
+    usage()
+    sys.exit(1)
+
+hiding_data = False
+recovering_data = False
+
+for opt, arg in opts:
+    if opt in ("-h", "--hide"):
+        hiding_data = True
+    elif opt in ("-r", "--recover"):
+        recovering_data = True
+    elif opt in ("-i", "--image"):
+        input_image_path = arg
+    elif opt in ("-f", "--file"):
+        input_file_path = arg
+    elif opt in ("-o", "--output"):
+        output_file_path = arg
+    elif opt in ("-k", "--key="):
+        key = arg
+    elif opt in ("-c", "--compression="):
+        compression = int(arg)
+    elif opt in ("--help"):
+        usage()
+        sys.exit(1)
+    else:
+        print("Invalid argument {}".format(opt))
+
+try:
+    if (hiding_data):
+        input_image_path = input_image_path
+        input_file_path = input_file_path
+        steg_image_path = output_file_path
+        key = key
+        compression = compression
+        hide_data()
+    if (recovering_data):
+        steg_image_path = input_image_path
+        output_file_path = output_file_path
+        key = key
+        compression = compression
+        recover_data()
+except Exception as e:
+    print("Ran into an error during execution. Check input and try again.\n")
+    print(e)
+    usage()
+    sys.exit(1)
+# Initial paths, variables used.
+#input_image_path = "pic.png"
+#steg_image_path = "steg_image.png"
+#input_file_path = "a.txt"
+#output_file_path = "b.txt"
+#key = "MihirWagle"
+#compression = 1
