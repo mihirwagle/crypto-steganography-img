@@ -15,10 +15,11 @@ Using the project on your system ->
   * pip install pycipher
   * pip install Pillow
 
-Sample running commands
-  C:\Users\super\Documents\GitHub\crypto-steganography-img>py img-steg.py -h -i pic.png -f a.txt -o steg.png -k MSW -c 1
-    Hiding 23 bytes
-    Runtime: 1.42 s  
-  C:\Users\super\Documents\GitHub\crypto-steganography-img>py img-steg.py -r -i steg.png -o b.txt -k MSW -c 1
-    Looking to recover 23 bytes
-    Runtime: 0.67 s
+Sample running commands:
+
+    C:\Users\super\Documents\GitHub\crypto-steganography-img>py img-steg.py -h -i pic.png -f a.txt -o steg.png -k MSW -c 1
+        Hiding 23 bytes
+        Runtime: 1.42 s  
+    C:\Users\super\Documents\GitHub\crypto-steganography-img>py img-steg.py -r -i steg.png -o b.txt -k MSW -c 1
+        Looking to recover 23 bytes
+        Runtime: 0.67 s
