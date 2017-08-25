@@ -91,7 +91,7 @@ def hide_data():
     prepare_hide()
     reset_buffer()
     data1 = input_file.read()
-    print (data1)
+    #print (data1)
     data1 = data1.decode('utf-8')
     ciphered = Vigenere(key).encipher(data1)
     ciphered = ciphered.encode('utf-8')

@@ -14,36 +14,11 @@ Using the project on your system ->
   * Install python 3
   * pip install pycipher
   * pip install Pillow
-  * py -i img-steg.py
 
-  Set the following variables, depending on what you want to do.
-
-      # Path of the image to hide data in
-  	# Default is "pic.png"
-  	input_image_path = "directory\pic.png"
-
-  	# Path of the image to recover data from OR
-  	# Path to write steganographed image
-  	# Default is "steg_image.png"
-  	steg_image_path = "directory\steg_image.png"
-
-  	# Path of file to hide in image
-  	# Default is "input.zip"
-  	input_file_path = "directory\a.txt"
-
-  	# Path of file to recover data to
-  	# Default is "output.zip"
-  	output_file_path = "directory\b.txt"
-
-  	# Number of least signifcant bits to use when hiding or recovering data
-  	# Default is 2
-  	num_lsb = 2
-
-    # Key used for vignere cipher
-    # Default is "MihirWagle"
-    key = "MihirWagle"
-
-  	# How much to compress image when saving as .png
-  	# 1 gives best speed, 9 gives best compression
-  	# Default is 1
-  	compression = 1
+Sample running commands
+  C:\Users\super\Documents\GitHub\crypto-steganography-img>py img-steg.py -h -i pic.png -f a.txt -o steg.png -k MSW -c 1
+    Hiding 23 bytes
+    Runtime: 1.42 s  
+  C:\Users\super\Documents\GitHub\crypto-steganography-img>py img-steg.py -r -i steg.png -o b.txt -k MSW -c 1
+    Looking to recover 23 bytes
+    Runtime: 0.67 s
