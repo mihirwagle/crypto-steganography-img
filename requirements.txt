@@ -1,0 +1,3 @@
+olefile==0.44
+Pillow==4.2.1
+pycipher==0.5.2
