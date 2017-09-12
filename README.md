@@ -38,7 +38,7 @@ Using zip technique for steganography ->
  ```
 
 Sample Running commands:
-
+```
 (virt-env) C:\Users\user\PythonProjects\crypto-steganography-img>python zip-steg.py -h -i pic.png -f a.txt -o steg.png -k MSW -c 1
 
 7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
@@ -60,3 +60,4 @@ Runtime: 1.76 s
 (virt-env) C:\Users\user\PythonProjects\crypto-steganography-img>python zip-steg.py -r -i steg.png -o steg.txt -k MSW -c 1
 Looking to recover 223 bytes
 Runtime: 0.61 s
+```
