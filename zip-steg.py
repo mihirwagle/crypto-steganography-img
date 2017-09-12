@@ -29,9 +29,7 @@ num_lsb = 2
 def prepare_hide():
     # Prepare files for reading and writing for hiding data.
     global image, input_file, input_file_path
-    print("here")
-    print(input_file_path)
-    print("there")
+    
     try:
         image = Image.open(input_image_path)
         #input_file = open(input_file_path, "rb")
