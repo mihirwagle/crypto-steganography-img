@@ -1,6 +1,6 @@
 # The MIT License (MIT)
 #
-# Copyright (c) 2015 Ryan Gibson
+# Copyright (c) 2017 Mihir Wagle
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,9 @@ def prepare_hide():
     try:
         image = Image.open(input_image_path)
         input_file = open(input_file_path, "rb")
+        rc = subprocess.call(['7z', 'a', "-p"+key, '-y', 'myzipfile.zip'] + [ input_file_path ])
+        input_file_path = "myzipfile.zip"
+        input_file = open(input_file_path, "rb")
     except FileNotFoundError:
         print("Input image or file not found, will not be able to hide data.")
 
@@ -42,7 +45,7 @@ def prepare_recover():
 
     try:
         steg_image = Image.open(steg_image_path)
-        output_file = open(output_file_path, "wb+")
+        #output_file = open(output_file_path, "wb+")
     except FileNotFoundError:
         print("Steg image not found, will not be able to recover data.")
 
@@ -172,10 +175,13 @@ def recover_data():
             bits = read_bits_from_buffer(8)
             data += struct.pack('1B', bits)
             bytes_to_recover -= 1
-
-    output_file.write(bytes(data))
-    output_file.close()
-
+    a = 'myzipfile.zip'
+    a.write(bytes(data))
+    a.close()
+    with zipfile.ZipFile("myzipfile.zip", "r") as zf:
+        zf.setpassword(k)
+        zf.extractall(path=output_file_path+'/')
+    os.remove(a)
     stop = timeit.default_timer()
     print("Runtime: {0:.2f} s".format(stop - start))
 
@@ -191,13 +197,13 @@ def analysis():
 
 def usage():
     print("\nCommand Line Arguments:\n",
-          "-h, --hide              To hide data in a sound file\n",
-          "-r, --recover           To recover data from a sound file\n",
+          "-h, --hide              To hide data in a image file\n",
+          "-r, --recover           To recover data from a image file\n",
           "-i, --image=            Path to a .png file\n",
-          "-f, --file=             Path to a txt file to hide in the sound file\n",
-          "-o, --output=           Path to an output file\n",
+          "-f, --file=             Path to a txt file to hide in the image file\n",
+          "-o, --output=           Path to an output folder\n",
           "-k, --key=              How many LSBs to use\n",
-          "-c, --compression=      How many bytes to recover from the sound file\n",
+          "-c, --compression=      How many bytes to recover from the image file\n",
           "--help                  Display this message\n")
 
 try:

@@ -199,13 +199,13 @@ def analysis():
 
 def usage():
     print("\nCommand Line Arguments:\n",
-          "-h, --hide              To hide data in a sound file\n",
-          "-r, --recover           To recover data from a sound file\n",
+          "-h, --hide              To hide data in a image file\n",
+          "-r, --recover           To recover data from a image file\n",
           "-i, --image=            Path to a .png file\n",
-          "-f, --file=             Path to a txt file to hide in the sound file\n",
+          "-f, --file=             Path to a txt file to hide in the image file\n",
           "-o, --output=           Path to an output file\n",
           "-k, --key=              How many LSBs to use\n",
-          "-c, --compression=      How many bytes to recover from the sound file\n",
+          "-c, --compression=      How many bytes to recover from the image file\n",
           "--help                  Display this message\n")
 
 try:
