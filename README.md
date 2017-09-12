@@ -29,3 +29,34 @@ Sample running commands:
     C:\Users\super\Documents\GitHub\crypto-steganography-img>py img-steg.py -r -i steg.png -o b.txt -k MSW -c 1
         Looking to recover 23 bytes
         Runtime: 0.67 s
+
+Using zip technique for steganography ->
+ - Install 7zip additionally on your system. On macOS and Linux it can be easily installed using
+ ```
+ brew install p7zip                # macOS
+ sudo apt-get install p7zip-full   # Linux
+ ```
+
+Sample Running commands:
+
+(virt-env) C:\Users\user\PythonProjects\crypto-steganography-img>python zip-steg.py -h -i pic.png -f a.txt -o steg.png -k MSW -c 1
+
+7-Zip [64] 16.02 : Copyright (c) 1999-2016 Igor Pavlov : 2016-05-21
+
+Scanning the drive:
+1 file, 82 bytes (1 KiB)
+
+Creating archive: myzipfile.zip
+
+Items to compress: 1
+
+
+Files read from disk: 1
+Archive size: 223 bytes (1 KiB)
+Everything is Ok
+Hiding 223 bytes
+Runtime: 1.76 s
+
+(virt-env) C:\Users\user\PythonProjects\crypto-steganography-img>python zip-steg.py -r -i steg.png -o steg.txt -k MSW -c 1
+Looking to recover 223 bytes
+Runtime: 0.61 s
