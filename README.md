@@ -32,6 +32,7 @@ Sample running commands:
 
 Using zip technique for steganography ->
  - Install 7zip additionally on your system. On macOS and Linux it can be easily installed using
+ - On windows after installing the downloaded setup, make sure to include the installation location on PATH variable
  ```
  brew install p7zip                # macOS
  sudo apt-get install p7zip-full   # Linux
