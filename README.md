@@ -10,10 +10,16 @@ Initially, I have made a python script which is meant to be run interactively. F
 
 The project currently uses an implementation of Vignere cipher. This cipher is ideal only for text files. It becomes possible to generate an output but case and spaces are modified. Another ciphering technique will be needed to allow multiple file formats
 
+Using the virtual environment ->
+ ```bash
+    pip install virtualenv
+    virtualenv virt-env              #Creates a folder of this name which needs to be in .gitignore
+    source virt-env/source/activate  #To get into the virtual environment
+    deactivate                       #To quit virtual environment
+ ```
 Using the project on your system ->
-  * Install python 3
-  * pip install pycipher
-  * pip install Pillow
+ - Install python 3
+ - pip install -r requirements.txt
 
 Sample running commands:
 
