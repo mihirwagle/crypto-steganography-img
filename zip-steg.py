@@ -21,19 +21,25 @@
 # SOFTWARE.
 
 from PIL import Image
-import getopt, sys, math, os, struct, timeit, zipfile
-
+import getopt, sys, math, os, struct, timeit, zipfile, subprocess, shutil
+from sys import platform
 # Number of least significant bits containing/to contain data in image
 num_lsb = 2
 
 def prepare_hide():
     # Prepare files for reading and writing for hiding data.
-    global image, input_file
-
+    global image, input_file, input_file_path
+    
     try:
         image = Image.open(input_image_path)
-        input_file = open(input_file_path, "rb")
-        rc = subprocess.call(['7z', 'a', "-p"+key, '-y', 'myzipfile.zip'] + [ input_file_path ])
+        #input_file = open(input_file_path, "rb")
+        #rc = subprocess.call(['7z', 'a', "-p"+key, '-y', 'myzipfile.zip'] + [ input_file_path ])
+        if platform == "linux" or platform == "linux2" or platform == "darwin":
+            # linux or macOS
+            rc = subprocess.call(['7z', 'a', "-p"+key, '-y', 'myzipfile.zip'] + [ input_file_path ])
+        elif platform == "win32":
+            # Windows...
+            rc = subprocess.call(['7z', 'a', "-p"+key, '-y', 'myzipfile.zip'] + [ input_file_path ], shell=True)
         input_file_path = "myzipfile.zip"
         input_file = open(input_file_path, "rb")
     except FileNotFoundError:
@@ -130,6 +136,8 @@ def hide_data():
     image.putdata(color_data)
     image.save(steg_image_path, compress_level=compression)
     stop = timeit.default_timer()
+    input_file.close()
+    os.remove(input_file_path)
     print("Runtime: {0:.2f} s".format(stop - start))
 
 def recover_data():
@@ -175,13 +183,18 @@ def recover_data():
             bits = read_bits_from_buffer(8)
             data += struct.pack('1B', bits)
             bytes_to_recover -= 1
-    a = 'myzipfile.zip'
+    a = open('myzipfile.zip', 'wb+')
     a.write(bytes(data))
     a.close()
+    src = "steg-output"
     with zipfile.ZipFile("myzipfile.zip", "r") as zf:
-        zf.setpassword(k)
-        zf.extractall(path=output_file_path+'/')
-    os.remove(a)
+        zf.setpassword(key.encode('utf-8'))
+        zf.extractall(path=src)
+    files = os.listdir(src)
+    for f in files:
+        shutil.move(src+"/"+f, output_file_path)
+    shutil.rmtree(src)
+    os.remove('myzipfile.zip')
     stop = timeit.default_timer()
     print("Runtime: {0:.2f} s".format(stop - start))
 
